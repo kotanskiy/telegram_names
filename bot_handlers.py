@@ -9,7 +9,7 @@ def start(message):
     greeting_message = generate_greeting_message()
 
     try:
-        user = User.objects(telegram_id=message.chat.id)
+        user = User.objects(telegram_id=message.chat.id).get()
         greeting_message += ', ' + user.enter_name
     except DoesNotExist:
         pass
@@ -22,7 +22,7 @@ def rename_user(message):
     markup = ForceReply(selective=False)
     greeting_message = generate_greeting_message()
     try:
-        user = User.objects(telegram_id=message.chat.id)
+        user = User.objects(telegram_id=message.chat.id).get()
         greeting_message += ', ' + user.enter_name
     except DoesNotExist:
         pass
@@ -39,7 +39,7 @@ def hello(message):
     if not greeting_message:
         greeting_message = generate_greeting_message()
     try:
-        user = User.objects(telegram_id=message.chat.id)
+        user = User.objects(telegram_id=message.chat.id).get()
         greeting_message += ', ' + user.enter_name
     except DoesNotExist:
         pass
