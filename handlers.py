@@ -80,10 +80,10 @@ def get_message():
     return "!", 200
 
 
-@app.route("/")
+@app.route("/web_hook")
 def web_hook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://your_heroku_project.com/' + Config.TELEGRAM_TOKEN)
+    bot.set_webhook(url='https://lit-eyrie-94912.herokuapp.com/web_hook/' + Config.TELEGRAM_TOKEN)
     return "!", 200
 
 
