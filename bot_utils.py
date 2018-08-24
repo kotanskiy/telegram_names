@@ -26,9 +26,9 @@ def update_or_save_user(message):
             try:
                 user = User.objects(telegram_id=message.chat.id).get()
                 user.update(enter_name=message.text)
-                greeting_message = 'Имя было изменено на "{}"'.format(user.enter_name)
+                greeting_message = 'Имя было изменено'
             except DoesNotExist:
                 user = User(name_from_telegram=message.chat.username, telegram_id=message.chat.id, enter_name=message.text)
                 user.save()
-                greeting_message = 'Ваше имя было сохранено "{}"'.format(user.enter_name)
+                greeting_message = 'Ваше имя было сохранено'
             return greeting_message
