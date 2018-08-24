@@ -24,7 +24,7 @@ def update_or_save_user(message):
     if message.reply_to_message:
         if message.reply_to_message.text == 'Введите свое имя:':
             try:
-                user = User.objects(name_from_telegram=message.chat.username).get()
+                user = User.objects(telegram_id=message.chat.id).get()
                 user.update(enter_name=message.text)
                 greeting_message = 'Имя было изменено'
             except DoesNotExist:
