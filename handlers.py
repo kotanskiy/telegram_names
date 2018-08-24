@@ -1,10 +1,13 @@
 from datetime import datetime
 
+import telebot
+from flask import request
 from mongoengine import DoesNotExist
 from telebot.types import ForceReply, ReplyKeyboardMarkup, KeyboardButton
 
 from app import app
 from bot import bot
+from config import Config
 from db import User
 
 
@@ -71,6 +74,19 @@ def hello(message):
     bot.send_message(message.chat.id, reply_markup=keyboard, text=greeting_message)
 
 
-if __name__ == '__main__':
-    bot.polling(none_stop=True)
+@app.route('/' + Config.TELEGRAM_TOKEN, methods=['POST'])
+def get_message():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+
+
+@app.route("/")
+def web_hook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://your_heroku_project.com/' + Config.TELEGRAM_TOKEN)
+    return "!", 200
+
+
+# if __name__ == '__main__':
+#     bot.polling(none_stop=True)
 

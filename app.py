@@ -12,3 +12,5 @@ from db import User
 from admin import admin, UserAdminView
 
 admin.add_view(UserAdminView(User))
+
+from handlers import *
