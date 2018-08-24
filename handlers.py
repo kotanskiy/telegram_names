@@ -74,7 +74,7 @@ def hello(message):
     bot.send_message(message.chat.id, reply_markup=keyboard, text=greeting_message)
 
 
-@app.route('/' + Config.TELEGRAM_TOKEN, methods=['POST'])
+@app.route('/web_hook/' + Config.TELEGRAM_TOKEN, methods=['POST'])
 def get_message():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
