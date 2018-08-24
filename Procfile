@@ -1,1 +1,1 @@
-web: gunicorn telegram_names.wsgi --log-file -
+web: gunicorn main.wsgi --log-file -
