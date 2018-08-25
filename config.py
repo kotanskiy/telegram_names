@@ -1,5 +1,5 @@
 class Config:
-    DEBUG = True
+    DEBUG = False
     MONGODB_SETTINGS = {
         'db': 'telegram_names',
         'host': 'mongodb://ds125422.mlab.com/telegram_names',
