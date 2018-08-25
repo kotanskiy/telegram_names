@@ -1,5 +1,9 @@
 from datetime import datetime
 import re
+
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, ForceReply
+
+from bot import bot
 from db import User, DoesNotExist
 
 MESSAGES = {
@@ -11,8 +15,7 @@ MESSAGES = {
 
 def is_valid_name(name):
     pattern = r'[a-zA-Z]{,20}|[а-яА-Я]{,20}'
-    match = re.fullmatch(pattern, name)
-    return True if match else False
+    return True if re.fullmatch(pattern, name) else False
 
 
 def generate_greeting_message():
@@ -35,20 +38,29 @@ def add_name_to_greeting_message(message, greeting_message):
         return greeting_message
 
 
-def update_or_save_user(message):
-    if message.reply_to_message:
-        if message.reply_to_message.text == 'Введите свое имя:':
-            if not is_valid_name(message.text):
-                return 'Используйте только буквы'
-            try:
-                user = User.objects(telegram_id=message.from_user.id).get()
-                user.update(enter_name=message.text)
-                greeting_message = 'Имя было изменено'
-            except DoesNotExist:
-                user = User(name_from_telegram=message.from_user.username, telegram_id=message.from_user.id, enter_name=message.text)
-                user.save()
-                greeting_message = 'Ваше имя было сохранено'
-            return greeting_message
+def rename_user(message):
+    if not is_valid_name(message.text):
+        return 'Используйте только буквы'
+    try:
+        user = User.objects(telegram_id=message.from_user.id).get()
+        user.update(enter_name=message.text)
+        greeting_message = 'Имя было изменено'
+    except DoesNotExist:
+        user = User(name_from_telegram=message.from_user.username, telegram_id=message.from_user.id, enter_name=message.text)
+        user.save()
+        greeting_message = 'Ваше имя было сохранено'
+    return greeting_message
 
+
+def send_rename_button(message, greeting_message):
+    keyboard = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, one_time_keyboard=True)
+    button = KeyboardButton('Изменить Имя ☝️')
+    keyboard.add(button)
+    bot.send_message(message.chat.id, reply_markup=keyboard, text=greeting_message)
+
+
+def send_force_enter_name(message):
+    markup = ForceReply()
+    bot.send_message(message.chat.id, 'Введите свое имя:', reply_markup=markup)
 
 
