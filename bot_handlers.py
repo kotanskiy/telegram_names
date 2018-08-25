@@ -2,13 +2,6 @@ from bot_utils import *
 from bot import bot
 
 
-def is_enter_name_message(message):
-    if message.reply_to_message:
-        if message.reply_to_message.text == 'Введите свое имя:':
-            return True
-    return False
-
-
 @bot.message_handler(commands=['start'])
 def start(message):
     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
@@ -24,7 +17,7 @@ def enter_user_name(message):
     bot.send_message(message.chat.id, 'Введите свое имя:', reply_markup=markup)
 
 
-@bot.message_handler(func=lambda message: is_enter_name_message(message))
+@bot.message_handler(func=is_enter_name_message)
 def rename_user_handler(message):
     greeting_message = rename_user(message)
     if not greeting_message:

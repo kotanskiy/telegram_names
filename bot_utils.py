@@ -13,6 +13,13 @@ MESSAGES = {
 }
 
 
+def is_enter_name_message(message):
+    if message.reply_to_message:
+        if message.reply_to_message.text == 'Введите свое имя:':
+            return True
+    return False
+
+
 def is_valid_name(name):
     pattern = r'[a-zA-Z]{,20}|[а-яА-Я]{,20}'
     return True if re.fullmatch(pattern, name) else False
