@@ -13,6 +13,6 @@ from admin import admin, UserAdminView
 
 admin.add_view(UserAdminView(User))
 
-# from bot_handlers import *
+from bot_handlers import *
 
 from web_hook_views import *
