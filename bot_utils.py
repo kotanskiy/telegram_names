@@ -20,6 +20,15 @@ def generate_greeting_message():
     return greeting_message
 
 
+def add_name_to_greeting_message(message, greeting_message):
+    try:
+        user = User.objects(telegram_id=message.chat.id).get()
+        greeting_message += ', ' + user.enter_name
+        return greeting_message
+    except DoesNotExist:
+        return greeting_message
+
+
 def update_or_save_user(message):
     if message.reply_to_message:
         if message.reply_to_message.text == 'Введите свое имя:':
