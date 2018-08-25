@@ -25,5 +25,5 @@ def hello(message):
     bot.send_message(message.chat.id, greeting_message)
 
 
-bot.enable_save_next_step_handlers()
+bot.enable_save_next_step_handlers(delay=1)
 bot.load_next_step_handlers()
