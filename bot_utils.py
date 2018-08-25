@@ -4,7 +4,7 @@ import re
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, ForceReply
 
 from bot import bot
-from db import User, DoesNotExist
+from db import User
 
 MESSAGES = {
     'morning': 'Доброе утро',
@@ -37,22 +37,20 @@ def generate_greeting_message():
 
 
 def add_name_to_greeting_message(message, greeting_message):
-    try:
-        user = User.objects(telegram_id=message.from_user.id).get()
+    user = User.objects(telegram_id=message.from_user.id).first()
+    if user:
         greeting_message += ', ' + user.enter_name
-        return greeting_message
-    except DoesNotExist:
-        return greeting_message
+    return greeting_message
 
 
 def rename_user(message):
     if not is_valid_name(message.text):
         return 'Используйте только буквы'
-    try:
-        user = User.objects(telegram_id=message.from_user.id).get()
+    user = User.objects(telegram_id=message.from_user.id).first()
+    if user:
         user.update(enter_name=message.text)
         greeting_message = 'Имя было изменено'
-    except DoesNotExist:
+    else:
         user = User(name_from_telegram=message.from_user.username, telegram_id=message.from_user.id, enter_name=message.text)
         user.save()
         greeting_message = 'Ваше имя было сохранено'
@@ -60,7 +58,7 @@ def rename_user(message):
 
 
 def send_rename_button(message, greeting_message):
-    keyboard = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, one_time_keyboard=True)
+    keyboard = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, row_width=1)
     button = KeyboardButton('Изменить Имя ☝️')
     keyboard.add(button)
     bot.send_message(message.chat.id, reply_markup=keyboard, text=greeting_message)
