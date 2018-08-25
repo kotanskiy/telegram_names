@@ -5,10 +5,9 @@ from bot import bot
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    print(message.from_user)
     markup = ForceReply()
     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
-    bot.send_message(message.chat.id, greeting_message)
+    bot.send_message(message.chat.id, message.from_user.id)
     bot.send_message(message.chat.id, 'Введите свое имя:', reply_markup=markup)
 
 
