@@ -17,12 +17,6 @@ def enter_user_name(message):
     bot.send_message(message.chat.id, 'Введите свое имя:', reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text'])
-def hello(message):
-    greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
-    send_rename_button(message, greeting_message)
-
-
 @bot.message_handler(func=lambda message: message.reply_to_message.text == 'Введите свое имя:')
 def rename_user_handler(message):
     greeting_message = rename_user(message)
@@ -30,3 +24,12 @@ def rename_user_handler(message):
         greeting_message = generate_greeting_message()
     greeting_message = add_name_to_greeting_message(message, greeting_message)
     send_rename_button(message, greeting_message)
+
+
+@bot.message_handler(content_types=['text'])
+def hello(message):
+    greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
+    send_rename_button(message, greeting_message)
+
+
+
