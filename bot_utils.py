@@ -45,16 +45,19 @@ def add_name_to_greeting_message(message, greeting_message):
 
 def rename_user(message):
     if not is_valid_name(message.text):
-        return 'Используйте только буквы'
+        bot.send_message(message.chat.id, 'Используйте только буквы')
+        return
     user = User.objects(telegram_id=message.from_user.id).first()
     if user:
         user.update(enter_name=message.text)
-        greeting_message = 'Имя было изменено'
+        answer = 'Имя было изменено'
     else:
-        user = User(name_from_telegram=message.from_user.username, telegram_id=message.from_user.id, enter_name=message.text)
+        user = User(name_from_telegram=message.from_user.username,
+                    telegram_id=message.from_user.id,
+                    enter_name=message.text)
         user.save()
-        greeting_message = 'Ваше имя было сохранено'
-    return greeting_message
+        answer = 'Ваше имя было сохранено'
+    bot.send_message(message.chat.id, answer)
 
 
 def send_rename_button(message, greeting_message):
