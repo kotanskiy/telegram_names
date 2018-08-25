@@ -21,7 +21,7 @@ def is_enter_name_message(message):
 
 
 def is_valid_name(name):
-    pattern = r'[a-zA-Z]{,20}|[а-яА-Я]{,20}'
+    pattern = r'[a-zA-Z]{2,20}|[а-яА-Я]{2,20}'
     return True if re.fullmatch(pattern, name) else False
 
 
