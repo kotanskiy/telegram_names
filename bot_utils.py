@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import re
 from db import User, DoesNotExist
 
 MESSAGES = {
@@ -7,6 +7,12 @@ MESSAGES = {
     'day': 'Добрый день',
     'night': 'Добрый вечер'
 }
+
+
+def is_valid_name(name):
+    pattern = r'[a-zA-Z]{,20}|[а-яА-Я]{,20}'
+    match = re.fullmatch(pattern, name)
+    return True if match else False
 
 
 def generate_greeting_message():
@@ -32,6 +38,8 @@ def add_name_to_greeting_message(message, greeting_message):
 def update_or_save_user(message):
     if message.reply_to_message:
         if message.reply_to_message.text == 'Введите свое имя:':
+            if not is_valid_name(message.text):
+                return 'Используйте только буквы'
             try:
                 user = User.objects(telegram_id=message.from_user.id).get()
                 user.update(enter_name=message.text)
@@ -41,3 +49,6 @@ def update_or_save_user(message):
                 user.save()
                 greeting_message = 'Ваше имя было сохранено'
             return greeting_message
+
+
+
