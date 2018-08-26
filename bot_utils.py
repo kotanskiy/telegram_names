@@ -49,15 +49,17 @@ def rename_user(message):
         bot.register_next_step_handler(msg, rename_user)
         return
     user = User.objects(telegram_id=message.from_user.id).first()
-    if user:
-        user.update(enter_name=message.text)
-        answer = 'Имя было изменено'
-    else:
-        user = User(name_from_telegram=message.from_user.username,
-                    telegram_id=message.from_user.id,
-                    enter_name=message.text)
-        user.save()
-        answer = 'Ваше имя было сохранено'
+    user.update(enter_name=message.text)
+    answer = 'Имя было изменено'
+    # if user:
+    #     user.update(enter_name=message.text)
+    #     answer = 'Имя было изменено'
+    # else:
+    #     user = User(name_from_telegram=message.from_user.username,
+    #                 telegram_id=message.from_user.id,
+    #                 enter_name=message.text)
+    #     user.save()
+    #     answer = 'Ваше имя было сохранено'
     bot.send_message(message.chat.id, answer)
 
 
