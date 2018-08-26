@@ -23,3 +23,6 @@ def hello(message):
     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
     bot.send_message(message.chat.id, greeting_message)
 
+
+bot.enable_save_next_step_handlers(delay=2)
+bot.load_next_step_handlers()
