@@ -6,6 +6,7 @@ from app import app
 
 class UserAdminView(ModelView):
     form_columns = ('enter_name', 'name_from_telegram')
+    column_list = ('enter_name', 'name_from_telegram', 'telegram_id')
     can_create = False
 
 
