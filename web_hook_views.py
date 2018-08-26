@@ -17,3 +17,9 @@ def web_hook():
     bot.remove_webhook()
     bot.set_webhook(url='https://lit-eyrie-94912.herokuapp.com/web_hook/' + Config.TELEGRAM_TOKEN)
     return "!", 200
+
+
+@app.route('/remove_web_hook')
+def remove_web_hook():
+    bot.remove_webhook()
+    return "!", 200

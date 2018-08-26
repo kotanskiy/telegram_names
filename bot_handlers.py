@@ -1,3 +1,4 @@
+from app import app
 from bot_utils import *
 from bot import bot
 
@@ -28,3 +29,5 @@ def hello(message):
 # bot.enable_save_next_step_handlers()
 # bot.load_next_step_handlers()
 
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
