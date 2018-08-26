@@ -8,6 +8,8 @@ def start(message):
     send_rename_button(message, greeting_message)
     msg = bot.send_message(message.chat.id, 'Введите свое имя:')
     bot.register_next_step_handler(msg, rename_user)
+    bot.enable_save_next_step_handlers(delay=2)
+    bot.load_next_step_handlers()
 
 
 @bot.message_handler(func=lambda message: message.text == 'Изменить Имя ☝️')
@@ -16,6 +18,8 @@ def enter_user_name(message):
     bot.send_message(message.chat.id, greeting_message)
     msg = bot.send_message(message.chat.id, 'Введите свое имя:')
     bot.register_next_step_handler(msg, rename_user)
+    bot.enable_save_next_step_handlers(delay=2)
+    bot.load_next_step_handlers()
 
 
 @bot.message_handler(content_types=['text'])
@@ -24,5 +28,4 @@ def hello(message):
     bot.send_message(message.chat.id, greeting_message)
 
 
-bot.enable_save_next_step_handlers(delay=2)
-bot.load_next_step_handlers()
+
