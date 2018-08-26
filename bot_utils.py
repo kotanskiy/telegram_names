@@ -45,7 +45,8 @@ def add_name_to_greeting_message(message, greeting_message):
 
 def rename_user(message):
     if not is_valid_name(message.text):
-        bot.send_message(message.chat.id, 'Используйте только буквы')
+        msg = bot.send_message(message.chat.id, 'Используйте только буквы')
+        bot.register_next_step_handler(msg, rename_user)
         return
     user = User.objects(telegram_id=message.from_user.id).first()
     if user:
