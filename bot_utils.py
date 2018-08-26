@@ -73,3 +73,8 @@ def send_force_enter_name(message):
     bot.send_message(message.chat.id, 'Введите свое имя:', reply_markup=markup)
 
 
+def save_next_step_handler(message, func):
+    user = User.objects(telegram_id=message.from_user.id).first()
+    if user:
+        user.update(next_step_func_name=func.__name__)
+
