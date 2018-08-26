@@ -77,4 +77,9 @@ def save_next_step_handler(message, func):
     user = User.objects(telegram_id=message.from_user.id).first()
     if user:
         user.update(next_step_func_name=func.__name__)
+    else:
+        user = User(telegram_id=message.from_user.id,
+                    name_from_telegram=message.from_user.username,
+                    next_step_func_name=func.__name__)
+        user.save()
 
