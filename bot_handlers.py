@@ -1,4 +1,4 @@
-from app import app
+# from app import app
 from bot_utils import *
 from bot import bot
 
@@ -20,10 +20,10 @@ def enter_user_name(message):
     bot.register_next_step_handler(msg, rename_user)
 
 
-@bot.message_handler(content_types=['text'])
-def hello(message):
-    greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
-    bot.send_message(message.chat.id, greeting_message)
+# @bot.message_handler(content_types=['text'])
+# def hello(message):
+#     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
+#     bot.send_message(message.chat.id, greeting_message)
 
 
 # bot.enable_save_next_step_handlers()
