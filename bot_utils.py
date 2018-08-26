@@ -4,7 +4,7 @@ import re
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, ForceReply
 
 from bot import bot
-from db import User
+from database import User
 
 MESSAGES = {
     'morning': 'Доброе утро',
