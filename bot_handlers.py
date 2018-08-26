@@ -14,7 +14,7 @@ def start(message):
 @bot.message_handler(func=lambda message: message.text == 'Изменить Имя ☝️')
 def enter_user_name(message):
     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
-    bot.send_message(message.chat.id, greeting_message)
+    # bot.send_message(message.chat.id, greeting_message)
     msg = bot.send_message(message.chat.id, 'Введите свое имя:')
     bot.register_next_step_handler(msg, rename_user)
 
@@ -27,3 +27,4 @@ def hello(message):
 
 bot.enable_save_next_step_handlers()
 bot.load_next_step_handlers()
+
