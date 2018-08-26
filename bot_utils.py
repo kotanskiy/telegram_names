@@ -51,6 +51,7 @@ def rename_user(message):
     user = User.objects(telegram_id=message.from_user.id).first()
     user.update(enter_name=message.text)
     answer = 'Имя было изменено'
+    user.update(next_step_func_name='')
     bot.send_message(message.chat.id, answer)
 
 

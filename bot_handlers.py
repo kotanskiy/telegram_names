@@ -23,7 +23,6 @@ def hello(message):
     user = User.objects(telegram_id=message.from_user.id).first()
     if user and user.next_step_func_name:
         globals()[user.next_step_func_name](message)
-        user.update(next_step_func_name='')
         return
     greeting_message = add_name_to_greeting_message(message, generate_greeting_message())
     bot.send_message(message.chat.id, greeting_message)
